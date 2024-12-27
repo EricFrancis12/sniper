@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 
-const Options = () => {
-    const [color, setColor] = useState<string>("");
-    const [status, setStatus] = useState<string>("");
-    const [like, setLike] = useState<boolean>(false);
+function Options() {
+    const [color, setColor] = useState("");
+    const [status, setStatus] = useState("");
+    const [like, setLike] = useState(false);
 
     useEffect(() => {
         // Restores select box and checkbox state using the preferences
@@ -17,7 +17,7 @@ const Options = () => {
             (items) => {
                 setColor(items.favoriteColor);
                 setLike(items.likesColor);
-            }
+            },
         );
     }, []);
 
@@ -44,7 +44,7 @@ const Options = () => {
             <div>
                 Favorite color: <select
                     value={color}
-                    onChange={(event) => setColor(event.target.value)}
+                    onChange={(e) => setColor(e.target.value)}
                 >
                     <option value="red">red</option>
                     <option value="green">green</option>
@@ -57,7 +57,7 @@ const Options = () => {
                     <input
                         type="checkbox"
                         checked={like}
-                        onChange={(event) => setLike(event.target.checked)}
+                        onChange={(e) => setLike(e.target.checked)}
                     />
                     I like colors.
                 </label>
