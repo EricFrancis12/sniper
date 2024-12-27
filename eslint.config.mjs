@@ -17,6 +17,9 @@ export default [
                 version: "detect",
             },
         },
+        env: {
+            node: true,
+        },
         rules: {
             "no-unused-vars": "error",
         },
