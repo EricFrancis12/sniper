@@ -1,10 +1,10 @@
 {
     "name": "sniper",
-    "version": "0.0.1",
-    "description": "sniper",
+    "version": "0.1.0",
+    "description": "Create robust webpage navigation shortcuts",
     "main": "index.js",
     "scripts": {
-        "watch": "webpack --config webpack/webpack.dev.js --watch",
+        "dev": "webpack --config webpack/webpack.dev.js --watch",
         "build": "webpack --config webpack/webpack.prod.js",
         "clean": "rimraf dist",
         "test": "npx jest --passWithNoTests",

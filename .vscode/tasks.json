@@ -1,6 +1,4 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
     "version": "2.0.0",
     "command": "npm",
     "tasks": [
@@ -8,26 +6,36 @@
             "label": "install",
             "type": "shell",
             "command": "npm",
-            "args": ["install"]
+            "args": [
+                "install"
+            ]
         },
         {
             "label": "update",
             "type": "shell",
             "command": "npm",
-            "args": ["update"]
+            "args": [
+                "update"
+            ]
         },
         {
             "label": "test",
             "type": "shell",
             "command": "npm",
-            "args": ["run", "test"]
+            "args": [
+                "run",
+                "test"
+            ]
         },
         {
             "label": "build",
             "type": "shell",
             "group": "build",
             "command": "npm",
-            "args": ["run", "watch"]
+            "args": [
+                "run",
+                "watch"
+            ]
         }
     ]
 }
