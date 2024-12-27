@@ -1,25 +1,26 @@
 export enum TriggerType {
     // mouse
-    CLICK = "click",
-    MOUSEDOWN = "mousedown",
-    MOUSEUP = "mouseup",
-    MOUSEOVER = "mouseover",
-    MOUSEENTER = "mouseenter",
-    MOUSEEXIT = "mouseexit",
+    CLICK = "CLICK",
+    MOUSEDOWN = "MOUSEDOWN",
+    MOUSEUP = "MOUSEUP",
+    MOUSEOVER = "MOUSEOVER",
+    MOUSEENTER = "MOUSEENTER",
+    MOUSELEAVE = "MOUSELEAVE",
 
     // keyboard
-    KEYPRESS = "keypress",
-    KEYDOWN = "keydown",
-    KEYUP = "keyup",
+    KEYPRESS = "KEYPRESS",
+    KEYDOWN = "KEYDOWN",
+    KEYUP = "KEYUP",
 
     // load
-    PAGE_LOAD = "page_load",
+    PAGE_LOAD = "PAGE_LOAD",
 }
 
 export type Trigger = {
     triggerType: TriggerType;
     selector: string | null;
     maxMatches: number | null;
+    disabled: boolean;
 };
 
 export type ActionEvent = {
@@ -28,7 +29,7 @@ export type ActionEvent = {
 };
 
 export enum HandlerName {
-    CHANGE_BACKGROUND_COLOR = "CHANGE_BACKGROUND_COLOR",
+    LOG = "LOG",
 }
 
 export type Handler = (actionEvent: ActionEvent) => void;
@@ -37,4 +38,5 @@ export type Campaign = {
     urlRegex: string | string[];
     triggers: Trigger[];
     handlerNames: HandlerName[];
+    disabled: boolean;
 };

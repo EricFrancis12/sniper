@@ -10,19 +10,27 @@ export function testRegexStr(regexStr: string, testStr: string): boolean {
     }
 }
 
+export function isKeyTriggerType(triggerType: TriggerType): boolean {
+    if (triggerType === TriggerType.KEYPRESS
+        || triggerType === TriggerType.KEYDOWN
+        || triggerType === TriggerType.KEYUP
+    ) {
+        return true;
+    }
+    return false;
+}
+
 export function triggerTypeToEventName(triggerType: TriggerType): keyof WindowEventMap | null {
     switch (triggerType) {
-        case TriggerType.CLICK:
-        case TriggerType.MOUSEDOWN:
-        case TriggerType.MOUSEUP:
-        case TriggerType.MOUSEOVER:
-        case TriggerType.MOUSEENTER:
-        case TriggerType.MOUSEEXIT:
-        case TriggerType.KEYPRESS:
-        case TriggerType.KEYDOWN:
-        case TriggerType.KEYUP:
-            return triggerType as keyof WindowEventMap;
-        case TriggerType.PAGE_LOAD:
-            return null;
+        case TriggerType.CLICK: return "click";
+        case TriggerType.MOUSEDOWN: return "mousedown";
+        case TriggerType.MOUSEUP: return "mouseup";
+        case TriggerType.MOUSEOVER: return "mouseover";
+        case TriggerType.MOUSEENTER: return "mouseenter";
+        case TriggerType.MOUSELEAVE: return "mouseleave";
+        case TriggerType.KEYPRESS: return "keypress";
+        case TriggerType.KEYDOWN: return "keydown";
+        case TriggerType.KEYUP: return "keyup";
+        case TriggerType.PAGE_LOAD: return null;
     }
 }

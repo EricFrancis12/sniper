@@ -1,6 +1,6 @@
 import { doHandle } from "./handlers";
 import { Campaign } from "./types";
-import { testRegexStr, triggerTypeToEventName } from "./utils";
+import { isKeyTriggerType, testRegexStr, triggerTypeToEventName } from "./utils";
 
 interface EventListenerAdder {
     addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
@@ -12,7 +12,9 @@ window.addEventListener("load", () => {
             campaigns: [],
         },
         ({ campaigns }) => {
-            campaigns.forEach(({ urlRegex, triggers, handlerNames }: Campaign) => {
+            campaigns.forEach(({ urlRegex, triggers, handlerNames, disabled }: Campaign) => {
+                if (disabled) return;
+
                 const isMatch = typeof urlRegex === "string"
                     ? testRegexStr(urlRegex, window.location.href)
                     : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
@@ -20,14 +22,15 @@ window.addEventListener("load", () => {
                 if (!isMatch) return;
 
                 triggers.forEach((trigger) => {
+                    const { triggerType, selector, maxMatches, disabled } = trigger;
+                    if (disabled) return;
+
                     const doHandles = (e: Event | null) => {
                         handlerNames.forEach((hn) => doHandle(hn, {
                             trigger,
                             nativeEvent: e,
                         }));
                     };
-
-                    const { triggerType, selector, maxMatches } = trigger;
 
                     const elas: EventListenerAdder[] = selector
                         ? Array.from(document.querySelectorAll(selector))
@@ -39,10 +42,12 @@ window.addEventListener("load", () => {
 
                     elas.forEach((ela) => {
                         const eventName = triggerTypeToEventName(triggerType);
-                        if (eventName) {
-                            ela.addEventListener(eventName, doHandles);
-                        } else {
+                        if (!eventName) {
                             doHandles(null);
+                        } else if (isKeyTriggerType(triggerType)) {
+                            document.addEventListener(eventName, doHandles);
+                        } else {
+                            ela.addEventListener(eventName, doHandles);
                         }
                     });
                 });

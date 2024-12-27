@@ -4,6 +4,7 @@ import "./index.css";
 import { Campaign, HandlerName, TriggerType } from "./types";
 
 function Options() {
+    const [triggerType, setTriggerType] = useState<TriggerType>(TriggerType.CLICK);
     const [status, setStatus] = useState("");
 
     function saveCampaigns() {
@@ -13,14 +14,16 @@ function Options() {
                     urlRegex: "/.*/",
                     triggers: [
                         {
-                            triggerType: TriggerType.PAGE_LOAD,
+                            triggerType,
                             selector: null,
                             maxMatches: null,
+                            disabled: false,
                         },
                     ],
                     handlerNames: [
-                        HandlerName.CHANGE_BACKGROUND_COLOR,
+                        HandlerName.LOG,
                     ],
+                    disabled: false,
                 } satisfies Campaign],
             },
             () => {
@@ -35,8 +38,18 @@ function Options() {
 
     return (
         <>
-            <div>{status}</div>
+            <select
+                value={triggerType}
+                onChange={(e) => setTriggerType(e.target.value as TriggerType)}
+            >
+                {Object.values(TriggerType).map((tt) => (
+                    <option key={tt} value={tt}>
+                        {tt}
+                    </option>
+                ))}
+            </select>
             <button onClick={saveCampaigns}>Save</button>
+            <div>{status}</div>
         </>
     );
 };
