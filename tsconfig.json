@@ -8,6 +8,7 @@
         "sourceMap": false,
         "rootDir": ".",
         "outDir": "dist/js",
+        "noEmit": false,
         "noEmitOnError": true,
         "jsx": "react",
         "typeRoots": [
