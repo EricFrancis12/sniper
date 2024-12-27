@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
+import "./index.css";
 
 function Options() {
     const [color, setColor] = useState("");
@@ -42,7 +43,8 @@ function Options() {
     return (
         <>
             <div>
-                Favorite color: <select
+                Favorite color:
+                <select
                     value={color}
                     onChange={(e) => setColor(e.target.value)}
                 >
