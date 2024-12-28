@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { Campaign, HandlerName, TriggerType } from "./types";
+import { Campaign, TriggerType } from "./types";
 
 function Options() {
     const [triggerType, setTriggerType] = useState<TriggerType>(TriggerType.CLICK);
@@ -20,8 +20,15 @@ function Options() {
                             disabled: false,
                         },
                     ],
-                    handlerNames: [
-                        HandlerName.LOG,
+                    handlers: [
+                        {
+                            script: `alert("💉 A JavaScript Alert!");`,
+                            disabled: false,
+                        },
+                        {
+                            script: `console.log("Hello from handler.script");`,
+                            disabled: false,
+                        },
                     ],
                     disabled: false,
                 } satisfies Campaign],

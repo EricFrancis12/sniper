@@ -23,20 +23,14 @@ export type Trigger = {
     disabled: boolean;
 };
 
-export type ActionEvent = {
-    trigger: Trigger;
-    nativeEvent: Event | null;
+export type Handler = {
+    script: string;
+    disabled: boolean;
 };
-
-export enum HandlerName {
-    LOG = "LOG",
-}
-
-export type Handler = (actionEvent: ActionEvent) => void;
 
 export type Campaign = {
     urlRegex: string | string[] | null;
     triggers: Trigger[];
-    handlerNames: HandlerName[];
+    handlers: Handler[];
     disabled: boolean;
 };

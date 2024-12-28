@@ -5,46 +5,40 @@ import { isKeyTriggerType, testRegexStr, triggerTypeToEventName } from "./utils"
 window.addEventListener("message", (e) => {
     const campaigns: Campaign[] = e.data.campaigns;
 
-    campaigns.forEach(({ urlRegex, triggers, handlerNames, disabled }: Campaign) => {
-        if (disabled) return;
+    campaigns
+        .filter(({ disabled, handlers }) => !disabled && handlers.some(h => !h.disabled))
+        .forEach(({ urlRegex, triggers, handlers }: Campaign) => {
+            const isMatch = urlRegex === null
+                ? false
+                : typeof urlRegex === "string"
+                    ? testRegexStr(urlRegex, window.location.href)
+                    : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
 
-        const isMatch = urlRegex === null
-            ? false
-            : typeof urlRegex === "string"
-                ? testRegexStr(urlRegex, window.location.href)
-                : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
+            if (!isMatch) return;
 
-        if (!isMatch) return;
+            const doHandles = () => handlers.forEach(doHandle);
 
-        triggers.forEach((trigger) => {
-            const { triggerType, selector, maxMatches, disabled } = trigger;
-            if (disabled) return;
+            triggers
+                .filter(({ disabled }) => !disabled)
+                .forEach(({ triggerType, selector, maxMatches }) => {
+                    const elas = selector
+                        ? Array.from(document.querySelectorAll(selector))
+                        : [document];
 
-            const doHandles = (e: Event | null) => {
-                handlerNames.forEach((hn) => doHandle(hn, {
-                    trigger,
-                    nativeEvent: e,
-                }));
-            };
+                    if (typeof maxMatches === "number") {
+                        elas.splice(maxMatches);
+                    }
 
-            const elas = selector
-                ? Array.from(document.querySelectorAll(selector))
-                : [document];
-
-            if (typeof maxMatches === "number") {
-                elas.splice(maxMatches);
-            }
-
-            elas.forEach((ela) => {
-                const eventName = triggerTypeToEventName(triggerType);
-                if (!eventName) {
-                    doHandles(null);
-                } else if (isKeyTriggerType(triggerType)) {
-                    document.addEventListener(eventName, doHandles);
-                } else {
-                    ela.addEventListener(eventName, doHandles);
-                }
-            });
+                    elas.forEach((ela) => {
+                        const eventName = triggerTypeToEventName(triggerType);
+                        if (!eventName) {
+                            doHandles();
+                        } else if (isKeyTriggerType(triggerType)) {
+                            document.addEventListener(eventName, doHandles);
+                        } else {
+                            ela.addEventListener(eventName, doHandles);
+                        }
+                    });
+                });
         });
-    });
 });
