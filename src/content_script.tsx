@@ -7,6 +7,8 @@ interface EventListenerAdder {
 }
 
 window.addEventListener("load", () => {
+    // TODO: refactor to have an ISOLATED content_script retreive the campaigns,
+    // and then send them to this file for handling in MAIN
     chrome.storage.sync.get(
         {
             campaigns: [],
@@ -15,9 +17,11 @@ window.addEventListener("load", () => {
             campaigns.forEach(({ urlRegex, triggers, handlerNames, disabled }: Campaign) => {
                 if (disabled) return;
 
-                const isMatch = typeof urlRegex === "string"
-                    ? testRegexStr(urlRegex, window.location.href)
-                    : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
+                const isMatch = urlRegex === null
+                    ? false
+                    : typeof urlRegex === "string"
+                        ? testRegexStr(urlRegex, window.location.href)
+                        : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
 
                 if (!isMatch) return;
 

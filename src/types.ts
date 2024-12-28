@@ -35,7 +35,7 @@ export enum HandlerName {
 export type Handler = (actionEvent: ActionEvent) => void;
 
 export type Campaign = {
-    urlRegex: string | string[];
+    urlRegex: string | string[] | null;
     triggers: Trigger[];
     handlerNames: HandlerName[];
     disabled: boolean;
