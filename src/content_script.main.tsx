@@ -2,7 +2,7 @@ import { doHandle } from "./handlers";
 import { Campaign } from "./types";
 import { isKeyTriggerType, testRegexStr, triggerTypeToEventName } from "./utils";
 
-window.addEventListener('message', (e) => {
+window.addEventListener("message", (e) => {
     const campaigns: Campaign[] = e.data.campaigns;
 
     campaigns.forEach(({ urlRegex, triggers, handlerNames, disabled }: Campaign) => {

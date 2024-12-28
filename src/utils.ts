@@ -10,6 +10,15 @@ export function testRegexStr(regexStr: string, testStr: string): boolean {
     }
 }
 
+export function injectJSCode(code: string) {
+    const scriptElement = document.createElement("script");
+    scriptElement.setAttribute("type", "text/javascript");
+    scriptElement.textContent = code;
+    document.documentElement.appendChild(scriptElement);
+
+    setTimeout(() => scriptElement.remove(), 0);
+}
+
 export function isKeyTriggerType(triggerType: TriggerType): boolean {
     if (triggerType === TriggerType.KEYPRESS
         || triggerType === TriggerType.KEYDOWN
