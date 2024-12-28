@@ -2,7 +2,6 @@ import { ActionEvent, HandlerName, Handler } from "./types";
 
 export function doHandle(handlerName: HandlerName, actionEvent: ActionEvent): void {
     const record: Record<HandlerName, Handler> = {
-        // TODO: ...
         [HandlerName.LOG]: logHandler,
     };
 
@@ -11,4 +10,13 @@ export function doHandle(handlerName: HandlerName, actionEvent: ActionEvent): vo
 
 function logHandler(actionEvent: ActionEvent) {
     console.log("new action event:", actionEvent);
+
+    injectJSCode("alert('💉 A JavaScript Alert!');");
+}
+
+function injectJSCode(code: string) {
+    const scriptElement = document.createElement('script');
+    scriptElement.setAttribute('type', 'text/javascript');
+    scriptElement.textContent = code;
+    document.documentElement.appendChild(scriptElement);
 }

@@ -14,17 +14,29 @@
     },
     "content_scripts": [
         {
+            "world": "MAIN",
             "matches": [
                 "<all_urls>"
             ],
             "js": [
                 "js/vendor.js",
-                "js/content_script.js"
+                "js/content_script.main.js"
+            ]
+        },
+        {
+            "world": "ISOLATED",
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/vendor.js",
+                "js/content_script.isolated.js"
             ]
         }
     ],
     "permissions": [
-        "storage"
+        "storage",
+        "tabs"
     ],
     "host_permissions": [
         "<all_urls>"
