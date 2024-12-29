@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Campaign, TriggerType } from "./types";
+import { Campaign, KeyName, TriggerType } from "./types";
 import "./index.css";
 
 function Options() {
@@ -15,6 +15,7 @@ function Options() {
                     triggers: [
                         {
                             triggerType,
+                            keyName: KeyName.A,
                             selector: null,
                             maxMatches: null,
                             disabled: false,
