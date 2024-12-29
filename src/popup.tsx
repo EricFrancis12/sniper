@@ -1,17 +1,24 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { Button } from "./components/ui/button";
 
 function Popup() {
     return (
-        <>
-            <button onClick={() => chrome.storage.sync.clear()}>
+        <div className="text-center">
+            <Button
+                className="m-2"
+                onClick={() => chrome.storage.sync.clear()}
+            >
                 Clear Storage
-            </button>
-            <button onClick={() => chrome.runtime.openOptionsPage()}>
+            </Button>
+            <Button
+                className="m-2"
+                onClick={() => chrome.runtime.openOptionsPage()}
+            >
                 Options
-            </button>
-        </>
+            </Button>
+        </div>
     );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Campaign, KeyName, TriggerType } from "./types";
+import { Campaign, KeyName, TriggerType } from "./lib/types";
 import "./index.css";
 
 function Options() {

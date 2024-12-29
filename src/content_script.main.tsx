@@ -1,9 +1,9 @@
-import { doHandle } from "./handlers";
+import { doHandle } from "./lib/handlers";
 import {
     isKeyTriggerType, safeTestRegexStr, satisfiesAllModifiers,
     toKeyboardEvent, triggerTypeToEventName
-} from "./utils";
-import { Campaign } from "./types";
+} from "./lib/utils";
+import { Campaign } from "./lib/types";
 
 window.addEventListener("message", (e) => {
     const campaigns: Campaign[] = e.data.campaigns;
