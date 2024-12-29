@@ -1,22 +1,28 @@
 import { doHandle } from "./handlers";
+import { isKeyTriggerType, safeTestRegexStr, triggerTypeToEventName } from "./utils";
 import { Campaign } from "./types";
-import { isKeyTriggerType, testRegexStr, triggerTypeToEventName } from "./utils";
 
 window.addEventListener("message", (e) => {
     const campaigns: Campaign[] = e.data.campaigns;
 
     campaigns
-        .filter(({ disabled, handlers }) => !disabled && handlers.some(h => !h.disabled))
-        .forEach(({ urlRegex, triggers, handlers }: Campaign) => {
-            const isMatch = urlRegex === null
+        .filter(({ urlRegex, handlers, disabled }) => {
+            const urlIsMatch = urlRegex === null
                 ? false
                 : typeof urlRegex === "string"
-                    ? testRegexStr(urlRegex, window.location.href)
-                    : urlRegex.some((ur) => testRegexStr(ur, window.location.href));
+                    ? safeTestRegexStr(urlRegex, window.location.href)
+                    : urlRegex.some((ur) => safeTestRegexStr(ur, window.location.href));
 
-            if (!isMatch) return;
-
-            const doHandles = () => handlers.forEach(doHandle);
+            return urlIsMatch
+                && handlers.some(h => !h.disabled)
+                && !disabled;
+        })
+        .forEach(({ triggers, handlers }: Campaign) => {
+            const doHandles = () => {
+                // TODO: add app disabled state,
+                // and check if disabled here
+                handlers.forEach(doHandle);
+            };
 
             triggers
                 .filter(({ disabled }) => !disabled)

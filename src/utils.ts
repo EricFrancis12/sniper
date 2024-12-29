@@ -1,11 +1,18 @@
 import { TriggerType } from "./types";
 
-export function testRegexStr(regexStr: string, testStr: string): boolean {
+export function safeParseJSON(s: string) {
+    try {
+        return JSON.parse(s);
+    } catch (err) {
+        return null;
+    }
+}
+
+export function safeTestRegexStr(regexStr: string, testStr: string): boolean {
     try {
         const regex = new RegExp(regexStr);
         return regex.test(testStr);
     } catch (err) {
-        console.error(err);
         return false;
     }
 }

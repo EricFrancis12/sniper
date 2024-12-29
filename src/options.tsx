@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import { Campaign, TriggerType } from "./types";
+import "./index.css";
 
 function Options() {
     const [triggerType, setTriggerType] = useState<TriggerType>(TriggerType.CLICK);
@@ -59,7 +59,7 @@ function Options() {
             <div>{status}</div>
         </>
     );
-};
+}
 
 const root = createRoot(document.getElementById("root")!);
 root.render(

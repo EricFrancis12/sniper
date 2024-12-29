@@ -13,7 +13,7 @@ function Popup() {
             </button>
         </>
     );
-};
+}
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
