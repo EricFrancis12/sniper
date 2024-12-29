@@ -3,9 +3,6 @@
     "name": "Sniper",
     "description": "Create robust webpage navigation shortcuts",
     "version": "0.1.0",
-    "options_ui": {
-        "page": "options.html"
-    },
     "action": {
         "default_icon": {
             "16": "icon.png"

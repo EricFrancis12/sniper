@@ -14,6 +14,12 @@ function Popup() {
             </Button>
             <Button
                 className="m-2"
+                onClick={() => chrome.tabs.create({ url: chrome.runtime.getURL("options.html") })}
+            >
+                Options Page
+            </Button>
+            <Button
+                className="m-2"
                 onClick={() => chrome.runtime.openOptionsPage()}
             >
                 Options

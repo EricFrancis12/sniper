@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Campaign, KeyName, TriggerType } from "./lib/types";
 import "./index.css";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
+import { Button } from "./components/ui/button";
 
 function Options() {
     const [triggerType, setTriggerType] = useState<TriggerType>(TriggerType.CLICK);
@@ -46,20 +48,27 @@ function Options() {
     }
 
     return (
-        <>
-            <select
-                value={triggerType}
-                onChange={(e) => setTriggerType(e.target.value as TriggerType)}
-            >
-                {Object.values(TriggerType).map((tt) => (
-                    <option key={tt} value={tt}>
-                        {tt}
-                    </option>
-                ))}
-            </select>
-            <button onClick={saveCampaigns}>Save</button>
-            <div>{status}</div>
-        </>
+        <main className="h-screen w-full p-4">
+            <div className="flex flex-col items-center gap-2">
+                <Select
+                    value={triggerType}
+                    onValueChange={(value) => setTriggerType(value as TriggerType)}
+                >
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Theme" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Object.values(TriggerType).map((tt) => (
+                            <SelectItem key={tt} value={tt}>
+                                {tt}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <Button onClick={saveCampaigns}>Save</Button>
+                <div>{status}</div>
+            </div>
+        </main>
     );
 }
 
