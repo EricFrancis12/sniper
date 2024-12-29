@@ -57,11 +57,19 @@ export enum KeyName {
     Seven = "7",
     Eight = "8",
     Nine = "9",
+
+    // Special
+    Alt = "Alt",
+    Control = "Control",
+    Shift = "Shift",
 }
+
+export type ModifierKeyName = KeyName.Alt | KeyName.Control | KeyName.Shift;
 
 export type Trigger = {
     triggerType: TriggerType;
     keyName: KeyName | null;
+    whilePressed: ModifierKeyName[];
     selector: string | null;
     maxMatches: number | null;
     disabled: boolean;

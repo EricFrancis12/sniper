@@ -16,6 +16,7 @@ function Options() {
                         {
                             triggerType,
                             keyName: KeyName.A,
+                            whilePressed: [KeyName.Shift],
                             selector: null,
                             maxMatches: null,
                             disabled: false,

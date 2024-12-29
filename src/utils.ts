@@ -1,4 +1,4 @@
-import { TriggerType } from "./types";
+import { KeyName, ModifierKeyName, TriggerType } from "./types";
 
 export function safeParseJSON(s: string) {
     try {
@@ -26,6 +26,19 @@ export function injectJSCode(code: string) {
     setTimeout(() => scriptElement.remove(), 0);
 }
 
+export function satisfiesAllModifiers(e: KeyboardEvent | MouseEvent, modifiers: ModifierKeyName[]): boolean {
+    for (const keyName of modifiers) {
+        if (keyName === KeyName.Alt) {
+            if (!e.altKey) return false;
+        } else if (keyName === KeyName.Control) {
+            if (!e.ctrlKey) return false;
+        } else if (keyName === KeyName.Shift) {
+            if (!e.shiftKey) return false;
+        }
+    }
+    return true;
+}
+
 export function isKeyTriggerType(triggerType: TriggerType): boolean {
     if (triggerType === TriggerType.KEYPRESS
         || triggerType === TriggerType.KEYDOWN
@@ -49,4 +62,11 @@ export function triggerTypeToEventName(triggerType: TriggerType): keyof WindowEv
         case TriggerType.KEYUP: return "keyup";
         case TriggerType.PAGE_LOAD: return null;
     }
+}
+
+export function toKeyboardEvent(u: unknown): KeyboardEvent | null {
+    if (u instanceof KeyboardEvent) {
+        return u;
+    }
+    return null;
 }

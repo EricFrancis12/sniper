@@ -1,6 +1,9 @@
 import { doHandle } from "./handlers";
-import { isKeyTriggerType, safeTestRegexStr, triggerTypeToEventName } from "./utils";
-import { Campaign, TriggerType } from "./types";
+import {
+    isKeyTriggerType, safeTestRegexStr, satisfiesAllModifiers,
+    toKeyboardEvent, triggerTypeToEventName
+} from "./utils";
+import { Campaign } from "./types";
 
 window.addEventListener("message", (e) => {
     const campaigns: Campaign[] = e.data.campaigns;
@@ -20,7 +23,7 @@ window.addEventListener("message", (e) => {
         .forEach(({ triggers, handlers }: Campaign) => {
             triggers
                 .filter(({ disabled }) => !disabled)
-                .forEach(({ triggerType, keyName, selector, maxMatches }) => {
+                .forEach(({ triggerType, keyName, whilePressed, selector, maxMatches }) => {
                     const elas = selector
                         ? Array.from(document.querySelectorAll(selector))
                         : [document];
@@ -29,16 +32,22 @@ window.addEventListener("message", (e) => {
                         elas.splice(maxMatches);
                     }
 
-                    const doHandles = (e?: Event) => {
+                    const doHandles = (e?: Event | KeyboardEvent | MouseEvent) => {
                         // TODO: add app disabled state,
                         // and check if disabled here
 
+                        // Handle if keyboard event
                         const keyboardEvent = toKeyboardEvent(e);
                         if (keyboardEvent
                             && keyName
                             && isKeyTriggerType(triggerType)
                             && keyboardEvent.key.toLowerCase() !== keyName.toLowerCase()
                         ) {
+                            return;
+                        }
+
+                        // Check if all trigger.whilePressed keys were pressed
+                        if (e && "key" in e && !satisfiesAllModifiers(e, whilePressed)) {
                             return;
                         }
 
@@ -58,10 +67,3 @@ window.addEventListener("message", (e) => {
                 });
         });
 });
-
-function toKeyboardEvent(u: unknown): KeyboardEvent | null {
-    if (u instanceof KeyboardEvent) {
-        return u;
-    }
-    return null;
-}
