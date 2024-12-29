@@ -3,10 +3,11 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import "@/index.css";
 import CampaignsPage from "./pages/CampaignsPage";
-import EditCampaignsPage from "./pages/EditCampaignsPage";
+import CreateCampaignPage from "./pages/CreateCampaignPage";
+import EditCampaignPage from "./pages/EditCampaignPage";
 import SettingsPage from "./pages/SettingsPage";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import AppSidebar from "@/components/AppSidebar";
 
 function Options() {
     return (
@@ -15,8 +16,9 @@ function Options() {
             <HashRouter>
                 <Routes>
                     <Route path="/" element={<CampaignsPage />} index />
-                    <Route path="/campaigns" element={<CampaignsPage />} index />
-                    <Route path="/campaigns/:campaignId/edit" element={<EditCampaignsPage />} index />
+                    <Route path="/campaigns" element={<CampaignsPage />} />
+                    <Route path="/campaigns/create" element={<CreateCampaignPage />} />
+                    <Route path="/campaigns/:campaignId/edit" element={<EditCampaignPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                 </Routes>
             </HashRouter>

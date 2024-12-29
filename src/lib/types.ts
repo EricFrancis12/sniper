@@ -81,7 +81,9 @@ export type Handler = {
 };
 
 export type Campaign = {
-    urlRegex: string | string[] | null;
+    id: string;
+    name: string;
+    urlRegex: string | null;
     triggers: Trigger[];
     handlers: Handler[];
     disabled: boolean;

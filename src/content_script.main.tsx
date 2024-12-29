@@ -12,9 +12,7 @@ window.addEventListener("message", (e) => {
         .filter(({ urlRegex, handlers, disabled }) => {
             const urlIsMatch = urlRegex === null
                 ? false
-                : typeof urlRegex === "string"
-                    ? safeTestRegexStr(urlRegex, window.location.href)
-                    : urlRegex.some((ur) => safeTestRegexStr(ur, window.location.href));
+                : safeTestRegexStr(urlRegex, window.location.href);
 
             return urlIsMatch
                 && handlers.some(h => !h.disabled)

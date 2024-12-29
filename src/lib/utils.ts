@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { KeyName, ModifierKeyName, TriggerType } from "./types";
+import { Campaign, Handler, KeyName, ModifierKeyName, Trigger, TriggerType } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -75,4 +75,27 @@ export function toKeyboardEvent(u: unknown): KeyboardEvent | null {
         return u;
     }
     return null;
+}
+
+export function newCampaign({
+    name = "",
+    urlRegex = "/.*/", // matches any string
+    triggers = [],
+    handlers = [],
+    disabled = false,
+}: {
+    name?: string;
+    urlRegex?: string;
+    triggers?: Trigger[];
+    handlers?: Handler[];
+    disabled?: boolean;
+} = {}): Campaign {
+    return {
+        id: crypto.randomUUID(),
+        name,
+        urlRegex,
+        triggers,
+        handlers,
+        disabled,
+    };
 }
