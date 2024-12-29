@@ -4,6 +4,8 @@ import { Campaign, KeyName, TriggerType } from "./lib/types";
 import "./index.css";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
 import { Button } from "./components/ui/button";
+import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
+import { AppSidebar } from "./components/app-sidebar";
 
 function Options() {
     const [triggerType, setTriggerType] = useState<TriggerType>(TriggerType.CLICK);
@@ -48,27 +50,31 @@ function Options() {
     }
 
     return (
-        <main className="h-screen w-full p-4">
-            <div className="flex flex-col items-center gap-2">
-                <Select
-                    value={triggerType}
-                    onValueChange={(value) => setTriggerType(value as TriggerType)}
-                >
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {Object.values(TriggerType).map((tt) => (
-                            <SelectItem key={tt} value={tt}>
-                                {tt}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-                <Button onClick={saveCampaigns}>Save</Button>
-                <div>{status}</div>
-            </div>
-        </main>
+        <SidebarProvider>
+            <AppSidebar />
+            <main className="h-screen w-full p-4">
+                <SidebarTrigger />
+                <div className="flex flex-col items-center gap-2">
+                    <Select
+                        value={triggerType}
+                        onValueChange={(value) => setTriggerType(value as TriggerType)}
+                    >
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.values(TriggerType).map((tt) => (
+                                <SelectItem key={tt} value={tt}>
+                                    {tt}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                    <Button onClick={saveCampaigns}>Save</Button>
+                    <div>{status}</div>
+                </div>
+            </main>
+        </SidebarProvider>
     );
 }
 

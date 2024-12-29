@@ -24,12 +24,12 @@ export function safeTestRegexStr(regexStr: string, testStr: string): boolean {
 }
 
 export function injectJSCode(code: string) {
-    const scriptElement = document.createElement("script");
-    scriptElement.setAttribute("type", "text/javascript");
-    scriptElement.textContent = code;
-    document.documentElement.appendChild(scriptElement);
+    const scriptEle = document.createElement("script");
+    scriptEle.setAttribute("type", "text/javascript");
+    scriptEle.textContent = code;
 
-    setTimeout(() => scriptElement.remove(), 0);
+    scriptEle.onload = () => scriptEle.remove();
+    document.documentElement.appendChild(scriptEle);
 }
 
 export function satisfiesAllModifiers(e: KeyboardEvent | MouseEvent, modifiers: ModifierKeyName[]): boolean {
