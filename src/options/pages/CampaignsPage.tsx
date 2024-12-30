@@ -1,7 +1,6 @@
 import React from "react";
-import "@/index.css";
-import { useCampaigns } from "@/hooks/use-campaigns";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useCampaigns } from "@/hooks/use-campaigns";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 

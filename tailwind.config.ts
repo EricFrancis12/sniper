@@ -1,12 +1,12 @@
 import type { Config } from "tailwindcss";
 
 export default {
-    darkMode: ["class"],
-    content: [
-        "./src/**/*.{html,js,jsx,ts,tsx}",
-        "./public/**/*.{html,js,jsx,ts,tsx}",
-    ],
-    theme: {
+	darkMode: ["class"],
+	content: [
+		"./src/**/*.{html,js,jsx,ts,tsx}",
+		"./public/**/*.{html,js,jsx,ts,tsx}",
+	],
+	theme: {
     	extend: {
     		colors: {
     			border: 'hsl(var(--border))',
@@ -34,10 +34,6 @@ export default {
     				DEFAULT: 'hsl(var(--accent))',
     				foreground: 'hsl(var(--accent-foreground))'
     			},
-    			popover: {
-    				DEFAULT: 'hsl(var(--popover))',
-    				foreground: 'hsl(var(--popover-foreground))'
-    			},
     			card: {
     				DEFAULT: 'hsl(var(--card))',
     				foreground: 'hsl(var(--card-foreground))'
@@ -60,5 +56,5 @@ export default {
     		}
     	}
     },
-    plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate")],
 } satisfies Config;

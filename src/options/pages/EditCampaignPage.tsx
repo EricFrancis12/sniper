@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import CampaignEditor from "@/components/CampaignEditor";
 import { useCampaigns } from "@/hooks/use-campaigns";
 import { Campaign } from "@/lib/types";
@@ -13,6 +14,7 @@ export default function EditCampaignPage() {
 
     return (
         <main className="h-screen w-full flex justify-center items-center">
+            <SidebarTrigger />
             {WIPCampaign
                 ? <CampaignEditor
                     type="new"
