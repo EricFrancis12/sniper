@@ -1,11 +1,11 @@
 import React from "react";
 import { Pencil, TrashIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTrigger } from "@/components/ui/drawer";
 import { Handler } from "@/lib/types";
 import { truncateWithEllipsis } from "@/lib/utils";
 import CodeEditor from "@/components/CodeEditor";
+import TitleWrapper from "../TitleWrapper";
 
 export default function HandlerItem({ handler, onChange, onDeleteIntent }: {
     handler: Handler;
@@ -28,13 +28,15 @@ export default function HandlerItem({ handler, onChange, onDeleteIntent }: {
                 <TrashIcon onClick={onDeleteIntent} className="cursor-pointer" />
                 <DrawerContent>
                     <DrawerHeader>
-                        <Switch
-                            checked={!handler.disabled}
-                            onCheckedChange={(disabled) => onChange({
-                                ...handler,
-                                disabled: !disabled,
-                            })}
-                        />
+                        <TitleWrapper title={handler.disabled ? "Handler Off" : "Handler On"}>
+                            <Switch
+                                checked={!handler.disabled}
+                                onCheckedChange={(disabled) => onChange({
+                                    ...handler,
+                                    disabled: !disabled,
+                                })}
+                            />
+                        </TitleWrapper>
                         <DrawerClose>
                             Close
                         </DrawerClose>
