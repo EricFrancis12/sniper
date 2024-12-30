@@ -8,10 +8,12 @@ import EditCampaignPage from "./pages/EditCampaignPage";
 import SettingsPage from "./pages/SettingsPage";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 function Options() {
     return (
         <SidebarProvider>
+            <Toaster />
             <AppSidebar />
             <HashRouter>
                 <Routes>

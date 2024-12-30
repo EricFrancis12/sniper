@@ -7,10 +7,10 @@ import { Handler } from "@/lib/types";
 import { truncateWithEllipsis } from "@/lib/utils";
 import CodeEditor from "@/components/CodeEditor";
 
-export default function HandlerItem({ handler, onChange, onDelete }: {
+export default function HandlerItem({ handler, onChange, onDeleteIntent }: {
     handler: Handler;
     onChange: (h: Handler) => void;
-    onDelete?: () => void;
+    onDeleteIntent?: () => void;
 }) {
     function handleCodeEditorChange(script?: string) {
         if (script !== undefined) {
@@ -25,7 +25,7 @@ export default function HandlerItem({ handler, onChange, onDelete }: {
         <div className="flex items-center gap-2 p-2 bg-slate-200 rounded-full">
             <Drawer>
                 <DrawerTrigger><Pencil /></DrawerTrigger>
-                <TrashIcon onClick={onDelete} className="cursor-pointer" />
+                <TrashIcon onClick={onDeleteIntent} className="cursor-pointer" />
                 <DrawerContent>
                     <DrawerHeader>
                         <Switch
@@ -36,7 +36,7 @@ export default function HandlerItem({ handler, onChange, onDelete }: {
                             })}
                         />
                         <DrawerClose>
-                            <Button variant="outline">Close</Button>
+                            Close
                         </DrawerClose>
                     </DrawerHeader>
                     <CodeEditor

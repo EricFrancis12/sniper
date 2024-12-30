@@ -4,12 +4,10 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 import { Trigger } from "@/lib/types";
 import { isKeyTriggerType } from "@/lib/utils";
 
-export default function TriggerItem({ trigger, onEdit, onDelete, EditComponent, DeleteComponent }: {
+export default function TriggerItem({ trigger, onEditIntent, onDeleteIntent }: {
     trigger: Trigger;
-    onEdit?: () => void;
-    onDelete?: () => void;
-    EditComponent?: React.FC<{ onClick?: () => void; }>;
-    DeleteComponent?: React.FC<{ onClick?: () => void; }>;
+    onEditIntent?: () => void;
+    onDeleteIntent?: () => void;
 }) {
     const { triggerType, keyName, whilePressed, selector, maxMatches, disabled } = trigger;
 
@@ -34,13 +32,8 @@ export default function TriggerItem({ trigger, onEdit, onDelete, EditComponent, 
                     <p>Disabled: {`${disabled}`}</p>
                 </HoverCardContent>
             </HoverCard>
-            {EditComponent
-                ? <EditComponent onClick={onEdit} />
-                : <Pencil onClick={onEdit} className="cursor-pointer" />}
-            {DeleteComponent
-                ? <DeleteComponent onClick={onDelete} />
-                : <TrashIcon onClick={onDelete} className="cursor-pointer" />
-            }
+            <Pencil onClick={onEditIntent} className="cursor-pointer" />
+            <TrashIcon onClick={onDeleteIntent} className="cursor-pointer" />
         </div>
     );
 }

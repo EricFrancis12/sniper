@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -8,31 +7,39 @@ import TitleWrapper from "@/components/TitleWrapper";
 import NullableInput from "@/components/nullable/NullableInput";
 import { Campaign, Trigger, TriggerType } from "@/lib/types";
 import { newTrigger, newHandler } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import TriggerEditor from "@/components/TriggerEditor";
 import PlusButton from "@/components/PlusButton";
 import TriggerItem from "./TriggerItem";
 import HandlerItem from "./HandlerItem";
 
-export default function CampaignEditor({ type, campaign, onChange = () => { }, onSave = () => { } }: {
+export default function CampaignEditor({ type, campaign, onChange = () => { }, onSaveIntent = () => { } }: {
     type: "new" | "edit";
     campaign: Campaign;
     onChange: (c: Campaign) => void;
-    onSave?: () => void;
+    onSaveIntent?: () => void;
 }) {
     const [WIPTrigger, setWIPTrigger] = useState<Trigger | null>(null);
 
-    function handleSheetOpen(open: boolean) {
-        if (!open) setWIPTrigger(null);
+    function handleSaveIntent() {
+        if (WIPTrigger) {
+            onChange({
+                ...campaign,
+                triggers: campaign.triggers.map((t) => t.id === WIPTrigger.id ? WIPTrigger : t),
+            });
+            setWIPTrigger(null);
+        }
     }
 
     return (
-        <Sheet onOpenChange={handleSheetOpen}>
+        <Sheet open={!!WIPTrigger}>
             <SheetContent>
                 {WIPTrigger
                     ? <TriggerEditor
                         trigger={WIPTrigger}
                         onChange={setWIPTrigger}
+                        onSaveIntent={handleSaveIntent}
+                        onCloseIntent={() => setWIPTrigger(null)}
                     />
                     : null
                 }
@@ -81,13 +88,8 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                                 <TriggerItem
                                     key={i}
                                     trigger={trigger}
-                                    onEdit={() => setWIPTrigger(structuredClone(trigger))}
-                                    EditComponent={({ onClick }) => (
-                                        <SheetTrigger onClick={onClick}>
-                                            <Pencil className="cursor-pointer" />
-                                        </SheetTrigger>
-                                    )}
-                                    onDelete={() => onChange({
+                                    onEditIntent={() => setWIPTrigger(structuredClone(trigger))}
+                                    onDeleteIntent={() => onChange({
                                         ...campaign,
                                         triggers: campaign.triggers.filter(({ id }) => id !== trigger.id),
                                     })}
@@ -115,6 +117,10 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                                         ...campaign,
                                         handlers: campaign.handlers.map((h) => h.id === handler.id ? handler : h),
                                     })}
+                                    onDeleteIntent={() => onChange({
+                                        ...campaign,
+                                        handlers: campaign.handlers.filter(({ id }) => id !== handler.id),
+                                    })}
                                 />
                             ))
                         }
@@ -127,7 +133,7 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                     </TitleWrapper>
                 </CardContent>
                 <CardFooter>
-                    <Button onClick={() => onSave()}>
+                    <Button onClick={onSaveIntent}>
                         {type === "new" ? "Create" : "Save"}
                     </Button>
                 </CardFooter>
