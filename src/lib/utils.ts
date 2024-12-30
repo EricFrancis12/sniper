@@ -14,6 +14,7 @@ export function truncateWithEllipsis(s: string, maxLength: number): string {
 }
 
 export function safeParseJSON(s: string) {
+    // TODO: refactor using zod
     try {
         return JSON.parse(s);
     } catch (err) {
@@ -37,6 +38,19 @@ export function injectJSCode(code: string) {
 
     scriptEle.onload = () => scriptEle.remove();
     document.documentElement.appendChild(scriptEle);
+}
+
+export function downloadAsJsonFile<T>(data: T, fileName: string) {
+    const content = JSON.stringify(data, null, 4);
+    const blob = new Blob([content], { type: "application/json" });
+
+    const aEle = document.createElement("a");
+    aEle.download = fileName;
+    aEle.href = URL.createObjectURL(blob);
+
+    document.documentElement.appendChild(aEle);
+    aEle.click();
+    aEle.remove();
 }
 
 export function satisfiesAllModifiers(e: KeyboardEvent | MouseEvent, modifiers: ModifierKeyName[]): boolean {

@@ -49,6 +49,9 @@ window.addEventListener("message", (e) => {
                             return;
                         }
 
+                        // TODO: add ability to specify preventDefault at the trigger level,
+                        // and if true, call e.?preventDefault() here.
+
                         handlers.forEach(doHandle);
                     };
 

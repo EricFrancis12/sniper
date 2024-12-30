@@ -88,3 +88,7 @@ export type Campaign = {
     handlers: Handler[];
     disabled: boolean;
 };
+
+export type SniperData = {
+    campaigns: Campaign[];
+};
