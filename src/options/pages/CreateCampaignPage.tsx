@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import CampaignEditor from "@/components/CampaignEditor";
+import PageMain from "../PageMain";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaigns } from "@/hooks/use-campaigns";
 import { newCampaign } from "@/lib/utils";
@@ -21,14 +23,17 @@ export default function CreateCampaignPage() {
     }
 
     return (
-        <main className="h-screen w-full flex justify-center items-center">
-            <SidebarTrigger />
+        <PageMain className="flex flex-col">
+            <Link to="/campaigns">
+                <Button><ArrowLeft />Back</Button>
+            </Link>
             <CampaignEditor
                 type="new"
+                className="m-auto"
                 campaign={campaign}
                 onChange={setCampaign}
                 onSaveIntent={handleSaveIntent}
             />
-        </main>
+        </PageMain>
     );
 }

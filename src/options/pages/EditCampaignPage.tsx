@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import CampaignEditor from "@/components/CampaignEditor";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaigns } from "@/hooks/use-campaigns";
+import PageMain from "../PageMain";
 import { Campaign } from "@/lib/types";
 
 export default function EditCampaignPage() {
@@ -18,23 +20,26 @@ export default function EditCampaignPage() {
 
     function handleSaveIntent() {
         if (WIPCampaign !== null) {
-            setCampaigns(campaigns.filter((c) => c.id === WIPCampaign.id ? WIPCampaign : c));
+            setCampaigns(campaigns.map((c) => c.id === WIPCampaign.id ? WIPCampaign : c));
             toast({ title: "Campaign Saved Successfully" });
         }
     }
 
     return (
-        <main className="h-screen w-full flex justify-center items-center">
-            <SidebarTrigger />
+        <PageMain className="flex flex-col">
+            <Link to="/campaigns">
+                <Button><ArrowLeft />Back</Button>
+            </Link>
             {WIPCampaign
                 ? <CampaignEditor
                     type="edit"
+                    className="m-auto"
                     campaign={WIPCampaign}
                     onChange={setWIPCampaign}
                     onSaveIntent={handleSaveIntent}
                 />
-                : <p className="font-bold italic">Campaign not found...</p>
+                : <p className="m-auto font-bold italic">Campaign not found...</p>
             }
-        </main>
+        </PageMain>
     );
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import NullableInput from "./NullableInput";
 
-export default function NullableNumberInput({ value, onChange, ...nativeProps }: {
+export default function NullableNumberInput({ value, onChange, title, ...nativeProps }: {
     value: number | null;
     onChange: (v: number | null) => void;
+    title?: string;
     nativeProps?: React.ComponentPropsWithoutRef<"input">;
 }) {
     function handleChange(inputValue: string | null) {
@@ -20,6 +21,7 @@ export default function NullableNumberInput({ value, onChange, ...nativeProps }:
             {...nativeProps}
             value={value?.toString() ?? null}
             onChange={handleChange}
+            title={title}
         />
     );
 }

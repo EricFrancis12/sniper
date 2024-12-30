@@ -18,9 +18,10 @@ function _Input({ value, onChange, disabled, nativeProps }: {
     );
 }
 
-export default function NullableInput({ value, onChange, ...nativeProps }: {
+export default function NullableInput({ value, onChange, title, ...nativeProps }: {
     value: string | null;
     onChange: (v: string | null) => void;
+    title?: string;
     nativeProps?: React.ComponentPropsWithoutRef<"input">;
 }) {
     return (
@@ -30,6 +31,7 @@ export default function NullableInput({ value, onChange, ...nativeProps }: {
             defaultValue={""}
             onChange={onChange}
             Component={_Input}
+            title={title}
         />
     );
 }

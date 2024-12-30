@@ -6,18 +6,21 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import TitleWrapper from "@/components/TitleWrapper";
 import NullableInput from "@/components/nullable/NullableInput";
 import { Campaign, Trigger, TriggerType } from "@/lib/types";
-import { newTrigger, newHandler } from "@/lib/utils";
+import { newTrigger, newHandler, cn } from "@/lib/utils";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import TriggerEditor from "@/components/TriggerEditor";
 import PlusButton from "@/components/PlusButton";
 import TriggerItem from "./TriggerItem";
 import HandlerItem from "./HandlerItem";
 
-export default function CampaignEditor({ type, campaign, onChange = () => { }, onSaveIntent = () => { } }: {
-    type: "new" | "edit";
+type CampaignEditorType = "new" | "edit";
+
+export default function CampaignEditor({ type, campaign, onChange = () => { }, onSaveIntent = () => { }, className }: {
+    type: CampaignEditorType;
     campaign: Campaign;
     onChange: (c: Campaign) => void;
     onSaveIntent?: () => void;
+    className?: string;
 }) {
     const [WIPTrigger, setWIPTrigger] = useState<Trigger | null>(null);
 
@@ -44,12 +47,13 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                     : null
                 }
             </SheetContent>
-            <Card className="flex flex-col gap-2 p-2">
+            <Card className={cn(className, "flex flex-col gap-2 p-2")}>
                 <CardHeader>
                     <CardTitle>{type === "new" ? "Create New Campaign" : "Edit Campaign"}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2 p-4">
-                    <TitleWrapper title={campaign.disabled ? "Campaign Off" : "Campaign On"}>
+                    <div className="flex justify-end items-center gap-2 w-full">
+                        <span>{campaignDisabledTitle(campaign.disabled, type)}</span>
                         <Switch
                             checked={!campaign.disabled}
                             onCheckedChange={(disabled) => onChange({
@@ -57,7 +61,7 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                                 disabled: !disabled,
                             })}
                         />
-                    </TitleWrapper>
+                    </div>
                     <TitleWrapper title="Campaign name">
                         <Input
                             placeholder="Campaign name"
@@ -68,16 +72,15 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                             })}
                         />
                     </TitleWrapper>
-                    <TitleWrapper title="Url Regex">
-                        <NullableInput
-                            nativeProps={{ placeholder: "Url Regex" }}
-                            value={campaign.urlRegex}
-                            onChange={(urlRegex) => onChange({
-                                ...campaign,
-                                urlRegex,
-                            })}
-                        />
-                    </TitleWrapper>
+                    <NullableInput
+                        title="Url Regex"
+                        nativeProps={{ placeholder: "Url Regex" }}
+                        value={campaign.urlRegex}
+                        onChange={(urlRegex) => onChange({
+                            ...campaign,
+                            urlRegex,
+                        })}
+                    />
                     <TitleWrapper
                         title="Triggers"
                         className="p-3 border border-black rounded"
@@ -108,7 +111,7 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
                         className="p-3 border border-black rounded"
                     >
                         {campaign.handlers.length === 0
-                            ? <p className="font-bold italic">No handlers...</p>
+                            ? <p className="font-bold italic">No Handlers...</p>
                             : campaign.handlers.map((handler, i) => (
                                 <HandlerItem
                                     key={i}
@@ -140,4 +143,11 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
             </Card>
         </Sheet>
     );
+}
+
+function campaignDisabledTitle(disabled: boolean, type: CampaignEditorType): string {
+    if (type === "new") {
+        return disabled ? "Start with Campaign Off" : "Start with Campaign On";
+    }
+    return disabled ? "Campaign Off" : "Campaign On";
 }

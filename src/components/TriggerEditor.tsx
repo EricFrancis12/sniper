@@ -80,33 +80,31 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                         })}
                     />
                 </TitleWrapper>
-                <TitleWrapper title="Selector">
-                    <NullableInput
-                        nativeProps={{ placeholder: "Selector" }}
-                        value={trigger.selector}
-                        onChange={(selector) => onChange({
-                            ...trigger,
-                            selector,
-                        })}
-                    />
-                </TitleWrapper>
-                <TitleWrapper title="Max Number of Matches">
-                    <NullableNumberInput
-                        nativeProps={{ placeholder: "Max Matches" }}
-                        value={trigger.maxMatches}
-                        onChange={(maxMatches) => onChange({
-                            ...trigger,
-                            maxMatches,
-                        })}
-                    />
-                </TitleWrapper>
+                <NullableInput
+                    title="Selector"
+                    nativeProps={{ placeholder: "Selector" }}
+                    value={trigger.selector}
+                    onChange={(selector) => onChange({
+                        ...trigger,
+                        selector,
+                    })}
+                />
+                <NullableNumberInput
+                    title="Max Number of Matches"
+                    nativeProps={{ placeholder: "Max Matches" }}
+                    value={trigger.maxMatches}
+                    onChange={(maxMatches) => onChange({
+                        ...trigger,
+                        maxMatches,
+                    })}
+                />
             </CardContent>
             <CardFooter className="flex items-center gap-2">
                 <Button onClick={onSaveIntent}>
-                    Save
+                    Confirm
                 </Button>
                 <Button onClick={onCloseIntent}>
-                    Close
+                    Back
                 </Button>
             </CardFooter>
         </Card>

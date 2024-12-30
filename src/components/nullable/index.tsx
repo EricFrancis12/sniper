@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 
-export function NullableComponent<T, P>({ value, defaultValue, onChange, Component, ...nativeProps }: {
+export function NullableComponent<T, P>({ value, defaultValue, onChange, title, Component, ...nativeProps }: {
     value: T | null;
     defaultValue: T;
     onChange: (t: T | null) => void;
+    title?: string;
     Component: React.FC<{ value: T; onChange: (t: T) => void; disabled: boolean; nativeProps?: P; }>;
     nativeProps?: P;
 }) {
@@ -27,6 +28,7 @@ export function NullableComponent<T, P>({ value, defaultValue, onChange, Compone
                 checked={!isNull}
                 onCheckedChange={handleCheckedChange}
             />
+            {<span>{title}</span>}
             <Component
                 {...nativeProps}
                 disabled={isNull}
