@@ -18,12 +18,6 @@ function Popup() {
             >
                 Options Page
             </Button>
-            <Button
-                className="m-2"
-                onClick={() => chrome.runtime.openOptionsPage()}
-            >
-                Options
-            </Button>
         </div>
     );
 }

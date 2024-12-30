@@ -31,21 +31,21 @@ window.addEventListener("message", (e) => {
                     }
 
                     const doHandles = (e?: Event | KeyboardEvent | MouseEvent) => {
-                        // TODO: add app disabled state,
-                        // and check if disabled here
+                        // TODO: add app disabled state, and check if disabled here
 
                         // Handle if keyboard event
                         const keyboardEvent = toKeyboardEvent(e);
+
                         if (keyboardEvent
                             && keyName
                             && isKeyTriggerType(triggerType)
-                            && keyboardEvent.key.toLowerCase() !== keyName.toLowerCase()
+                            && keyboardEvent.code.toLowerCase() !== keyName.toLowerCase()
                         ) {
                             return;
                         }
 
                         // Check if all trigger.whilePressed keys were pressed
-                        if (e && "key" in e && !satisfiesAllModifiers(e, whilePressed)) {
+                        if (e && "code" in e && !satisfiesAllModifiers(e, whilePressed)) {
                             return;
                         }
 

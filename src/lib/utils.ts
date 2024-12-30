@@ -41,11 +41,9 @@ export function injectJSCode(code: string) {
 
 export function satisfiesAllModifiers(e: KeyboardEvent | MouseEvent, modifiers: ModifierKeyName[]): boolean {
     for (const keyName of modifiers) {
-        if (keyName === KeyName.Alt) {
-            if (!e.altKey) return false;
-        } else if (keyName === KeyName.Control) {
+        if (keyName === ModifierKeyName.Control) {
             if (!e.ctrlKey) return false;
-        } else if (keyName === KeyName.Shift) {
+        } else if (keyName === ModifierKeyName.Shift) {
             if (!e.shiftKey) return false;
         }
     }

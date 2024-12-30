@@ -40,7 +40,7 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                             <SelectValue placeholder="Trigger Type" />
                         </SelectTrigger>
                         <SelectContent>
-                            {Object.keys(TriggerType).map((tt) => (
+                            {Object.values(TriggerType).map((tt) => (
                                 <SelectItem key={tt} value={tt}>
                                     {tt}
                                 </SelectItem>
@@ -61,7 +61,7 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                                 <SelectValue placeholder="Key" />
                             </SelectTrigger>
                             <SelectContent>
-                                {Object.keys(KeyName).map((k) => (
+                                {Object.values(KeyName).map((k) => (
                                     <SelectItem key={k} value={k}>
                                         {k}
                                     </SelectItem>
@@ -73,7 +73,7 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                 <TitleWrapper title="While Pressing Keys">
                     <SelectCollector
                         items={trigger.whilePressed}
-                        availItems={[KeyName.Alt, KeyName.Control, KeyName.Shift] satisfies ModifierKeyName[]}
+                        availItems={Object.values(ModifierKeyName)}
                         onChange={(items) => onChange({
                             ...trigger,
                             whilePressed: items as ModifierKeyName[],
