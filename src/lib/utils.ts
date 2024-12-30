@@ -6,6 +6,13 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
+export function truncateWithEllipsis(s: string, maxLength: number): string {
+    if (s.length > maxLength) {
+        return s.slice(0, maxLength - 3) + "...";
+    }
+    return s;
+}
+
 export function safeParseJSON(s: string) {
     try {
         return JSON.parse(s);
@@ -96,6 +103,43 @@ export function newCampaign({
         urlRegex,
         triggers,
         handlers,
+        disabled,
+    };
+}
+
+export function newTrigger(
+    triggerType: TriggerType,
+    {
+        keyName = null,
+        whilePressed = [],
+        selector = null,
+        maxMatches = null,
+        disabled = false,
+    }: {
+        keyName?: KeyName | null;
+        whilePressed?: ModifierKeyName[];
+        selector?: string | null;
+        maxMatches?: number | null;
+        disabled?: boolean;
+    } = {}): Trigger {
+    return {
+        id: crypto.randomUUID(),
+        triggerType,
+        keyName,
+        whilePressed,
+        selector,
+        maxMatches,
+        disabled,
+    };
+}
+
+export function newHandler({ script = "", disabled = false }: {
+    script?: string;
+    disabled?: boolean;
+} = {}): Handler {
+    return {
+        id: crypto.randomUUID(),
+        script,
         disabled,
     };
 }

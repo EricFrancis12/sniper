@@ -67,6 +67,7 @@ export enum KeyName {
 export type ModifierKeyName = KeyName.Alt | KeyName.Control | KeyName.Shift;
 
 export type Trigger = {
+    id: string;
     triggerType: TriggerType;
     keyName: KeyName | null;
     whilePressed: ModifierKeyName[];
@@ -76,6 +77,7 @@ export type Trigger = {
 };
 
 export type Handler = {
+    id: string;
     script: string;
     disabled: boolean;
 };
