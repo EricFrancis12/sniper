@@ -17,7 +17,7 @@
             ],
             "js": [
                 "js/vendor.js",
-                "js/content_script.main.js"
+                "js/contentScript.main.js"
             ]
         },
         {
@@ -27,7 +27,7 @@
             ],
             "js": [
                 "js/vendor.js",
-                "js/content_script.isolated.js"
+                "js/contentScript.isolated.js"
             ]
         }
     ],
