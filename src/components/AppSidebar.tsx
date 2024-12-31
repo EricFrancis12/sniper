@@ -3,7 +3,6 @@ import { TargetIcon, Settings } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarHeader,
@@ -11,10 +10,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Button } from "./ui/button";
-import { useCampaigns } from "@/hooks/use-campaigns";
-import { downloadAsJsonFile } from "@/lib/utils";
-import { SniperData } from "@/lib/types";
 
 const items = [
     {
@@ -30,15 +25,6 @@ const items = [
 ];
 
 export default function AppSidebar() {
-    const [campaigns] = useCampaigns();
-
-    function handleExport() {
-        downloadAsJsonFile(
-            { campaigns } satisfies SniperData,
-            "sniper.json",
-        );
-    }
-
     return (
         <Sidebar>
             <SidebarHeader>Sniper</SidebarHeader>
@@ -60,10 +46,6 @@ export default function AppSidebar() {
                     </SidebarGroupContent>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>
-                <Button onClick={handleExport}>Export Data</Button>
-                {/* TODO: impliment load sniper.json file */}
-            </SidebarFooter>
         </Sidebar>
     );
 }

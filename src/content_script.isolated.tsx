@@ -1,7 +1,14 @@
+import { sniperDataSchema } from "./lib/schemas";
+import { SniperData } from "./lib/types";
+
 window.addEventListener("load", () => {
-    // TODO: Use zod to check for correct Campaign type
     chrome.storage.sync.get(
-        { campaigns: [] },
-        ({ campaigns }) => window.postMessage({ campaigns }, "*"),
+        { campaigns: [] } satisfies SniperData,
+        async (items) => {
+            const { data, success } = await sniperDataSchema.spa(items);
+            if (success) {
+                window.postMessage(data, "*");
+            }
+        },
     );
 });

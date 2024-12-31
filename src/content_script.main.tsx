@@ -1,11 +1,13 @@
 import { doHandle } from "./lib/handlers";
 import { isKeyTriggerType, safeTestRegexStr, satisfiesAllModifiers } from "./lib/utils";
+import { sniperDataSchema } from "./lib/schemas";
 import { Campaign, toKeyboardEvent, triggerTypeToEventName } from "./lib/types";
 
-window.addEventListener("message", (e) => {
-    const campaigns: Campaign[] = e.data.campaigns;
+window.addEventListener("message", async (e) => {
+    const { data, success } = await sniperDataSchema.spa(e.data);
+    if (!success) return;
 
-    campaigns
+    data.campaigns
         .filter(({ urlRegex, handlers, disabled }) => {
             const urlIsMatch = urlRegex === null
                 ? false

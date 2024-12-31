@@ -3,6 +3,8 @@ import { twMerge } from "tailwind-merge";
 import { ModifierKeyName, TriggerType } from "@/lib/types";
 
 export * from "./dom";
+export * from "./file";
+export * from "./json";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -13,15 +15,6 @@ export function truncateWithEllipsis(s: string, maxLength: number): string {
         return s.slice(0, maxLength - 3) + "...";
     }
     return s;
-}
-
-export function safeParseJSON(s: string) {
-    // TODO: refactor using zod
-    try {
-        return JSON.parse(s);
-    } catch (err) {
-        return null;
-    }
 }
 
 export function safeTestRegexStr(regexStr: string, testStr: string): boolean {
