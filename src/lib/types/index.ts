@@ -1,3 +1,7 @@
+export * from "./new";
+export * from "./clone";
+export * from "./conv";
+
 export enum TriggerType {
     // mouse
     CLICK = "CLICK",
@@ -16,7 +20,6 @@ export enum TriggerType {
     PAGE_LOAD = "PAGE_LOAD",
 }
 
-// TODO: enumerate all keys
 export enum KeyName {
     // Letters
     A = "KeyA",
@@ -98,3 +101,6 @@ export type Campaign = {
 export type SniperData = {
     campaigns: Campaign[];
 };
+
+// Example: "click", "keydown", etc...
+export type EventName = keyof WindowEventMap;

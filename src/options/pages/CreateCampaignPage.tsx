@@ -6,7 +6,7 @@ import CampaignEditor from "@/components/CampaignEditor";
 import PageMain from "../PageMain";
 import { useToast } from "@/hooks/use-toast";
 import { useCampaigns } from "@/hooks/use-campaigns";
-import { newCampaign } from "@/lib/utils";
+import { newCampaign } from "@/lib/types";
 
 export default function CreateCampaignPage() {
     const navigate = useNavigate();

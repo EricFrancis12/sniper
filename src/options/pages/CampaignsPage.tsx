@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageMain from "../PageMain";
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils";
+import { cloneCampaignWithName } from "@/lib/types";
 
 export default function CampaignsPage() {
     const { toast } = useToast();
@@ -22,11 +23,7 @@ export default function CampaignsPage() {
         if (campaign) {
             setCampaigns([
                 ...campaigns,
-                {
-                    ...structuredClone(campaign),
-                    id: crypto.randomUUID(),
-                    name: `${campaign.name} (copy)`,
-                },
+                cloneCampaignWithName(campaign, `${campaign.name} (copy)`),
             ]);
         }
     }

@@ -5,13 +5,13 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import TitleWrapper from "@/components/TitleWrapper";
 import NullableInput from "@/components/nullable/NullableInput";
-import { Campaign, Trigger, TriggerType } from "@/lib/types";
-import { newTrigger, newHandler, cn } from "@/lib/utils";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import TriggerEditor from "@/components/TriggerEditor";
 import PlusButton from "@/components/PlusButton";
 import TriggerItem from "./TriggerItem";
 import HandlerItem from "./HandlerItem";
+import { cn } from "@/lib/utils";
+import { Campaign, Trigger, TriggerType, newTrigger, newHandler } from "@/lib/types";
 
 type CampaignEditorType = "new" | "edit";
 
