@@ -32,7 +32,7 @@ const items = [
 export default function AppSidebar() {
     const [campaigns] = useCampaigns();
 
-    function handleExportIntent() {
+    function handleExport() {
         downloadAsJsonFile(
             { campaigns } satisfies SniperData,
             "sniper.json",
@@ -61,7 +61,7 @@ export default function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
-                <Button onClick={handleExportIntent}>Export Data</Button>
+                <Button onClick={handleExport}>Export Data</Button>
                 {/* TODO: impliment load sniper.json file */}
             </SidebarFooter>
         </Sidebar>

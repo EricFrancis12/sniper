@@ -57,6 +57,12 @@ export enum KeyName {
     Seven = "Digit7",
     Eight = "Digit8",
     Nine = "Digit9",
+
+    // Arrow keys
+    ArrowUp = "ArrowUp",
+    ArrowDown = "ArrowDown",
+    ArrowLeft = "ArrowLeft",
+    ArrowRight = "ArrowRight",
 }
 
 export enum ModifierKeyName {

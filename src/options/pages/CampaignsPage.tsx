@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Pencil, TrashIcon } from "lucide-react";
+import { Copy, Pencil, TrashIcon } from "lucide-react";
 import { useCampaigns } from "@/hooks/use-campaigns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +15,20 @@ export default function CampaignsPage() {
     function handleDeleteCampaign(campaignId: string) {
         setCampaigns(campaigns.filter((c) => c.id !== campaignId));
         toast({ title: `Campaign ${campaignId} was deleted` });
+    }
+
+    function handleCloneCampaign(campaignId: string) {
+        const campaign = campaigns.find((c) => c.id === campaignId);
+        if (campaign) {
+            setCampaigns([
+                ...campaigns,
+                {
+                    ...structuredClone(campaign),
+                    id: crypto.randomUUID(),
+                    name: `${campaign.name} (copy)`,
+                },
+            ]);
+        }
     }
 
     return (
@@ -38,7 +52,7 @@ export default function CampaignsPage() {
                                 />
                                 <CardTitle>{campaign.name}</CardTitle>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className="flex justify-center items-center">
                                 <Link to={`/campaigns/${campaign.id}/edit`}>
                                     <Button>
                                         <Pencil />
@@ -46,6 +60,9 @@ export default function CampaignsPage() {
                                 </Link>
                                 <Button onClick={() => handleDeleteCampaign(campaign.id)}>
                                     <TrashIcon />
+                                </Button>
+                                <Button onClick={() => handleCloneCampaign(campaign.id)}>
+                                    <Copy />
                                 </Button>
                             </CardContent>
                         </Card>
