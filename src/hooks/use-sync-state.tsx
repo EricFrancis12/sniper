@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// TODO: impliment idle, pending, success, and failure states for useSyncState()
+// TODO: impliment idle, pending, success, and failure states for useSyncState(),
 
 export function useSyncState<T>(initialState: T, key: string): [T, React.Dispatch<React.SetStateAction<T>>] {
     const [state, setState] = useState<T>(initialState);

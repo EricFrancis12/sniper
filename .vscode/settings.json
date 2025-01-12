@@ -1,5 +1,9 @@
 {
     "typescript.tsdk": "./node_modules/typescript/lib",
+    "search.exclude": {
+        "**/node_modules": true,
+        "public/monaco": true,
+    },
     "files.eol": "\n",
     "json.schemas": [
         {
@@ -8,5 +12,5 @@
             ],
             "url": "http://json.schemastore.org/chrome-manifest"
         }
-    ]
+    ],
 }

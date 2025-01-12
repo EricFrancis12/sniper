@@ -41,7 +41,7 @@ export default function SelectCollector({ items, availItems, onChange }: {
                 <SelectTrigger>
                     <SelectValue placeholder="Key" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                     {availItems
                         .filter((item) => !items.includes(item))
                         .map((item, i) => (

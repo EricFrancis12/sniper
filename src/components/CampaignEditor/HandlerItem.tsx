@@ -1,5 +1,5 @@
 import React from "react";
-import { Pencil, TrashIcon } from "lucide-react";
+import { Pencil, TrashIcon, X } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Drawer, DrawerClose, DrawerContent, DrawerHeader, DrawerTrigger } from "@/components/ui/drawer";
 import { Handler } from "@/lib/types";
@@ -27,7 +27,7 @@ export default function HandlerItem({ handler, onChange, onDeleteIntent }: {
                 <DrawerTrigger><Pencil /></DrawerTrigger>
                 <TrashIcon onClick={onDeleteIntent} className="cursor-pointer" />
                 <DrawerContent>
-                    <DrawerHeader>
+                    <DrawerHeader className="flex justify-between items-center gap-4">
                         <TitleWrapper title={handler.disabled ? "Handler Off" : "Handler On"}>
                             <Switch
                                 checked={!handler.disabled}
@@ -37,8 +37,9 @@ export default function HandlerItem({ handler, onChange, onDeleteIntent }: {
                                 })}
                             />
                         </TitleWrapper>
-                        <DrawerClose>
-                            Close
+                        <DrawerClose className="flex items-center gap-2 opacity-70 hover:opacity-100">
+                            <X className="h-4 w-4" />
+                            <span>Close</span>
                         </DrawerClose>
                     </DrawerHeader>
                     <CodeEditor

@@ -39,7 +39,7 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                         <SelectTrigger>
                             <SelectValue placeholder="Trigger Type" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className="bg-white">
                             {Object.values(TriggerType).map((tt) => (
                                 <SelectItem key={tt} value={tt}>
                                     {tt}
@@ -60,7 +60,7 @@ export default function TriggerEditor({ trigger, onChange, onSaveIntent = () => 
                             <SelectTrigger>
                                 <SelectValue placeholder="Key" />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-white">
                                 {Object.values(KeyName).map((k) => (
                                     <SelectItem key={k} value={k}>
                                         {k}

@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import TitleWrapper from "@/components/TitleWrapper";
 import NullableInput from "@/components/nullable/NullableInput";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent } from "@/components/ui/sheet";
 import TriggerEditor from "@/components/TriggerEditor";
 import PlusButton from "@/components/PlusButton";
 import TriggerItem from "./TriggerItem";
@@ -36,15 +36,17 @@ export default function CampaignEditor({ type, campaign, onChange = () => { }, o
 
     return (
         <Sheet open={!!WIPTrigger}>
-            <SheetContent>
-                {WIPTrigger
-                    ? <TriggerEditor
+            <SheetContent
+                onCloseIntent={() => setWIPTrigger(null)}
+                className="pt-12"
+            >
+                {WIPTrigger &&
+                    <TriggerEditor
                         trigger={WIPTrigger}
                         onChange={setWIPTrigger}
                         onSaveIntent={handleSaveIntent}
                         onCloseIntent={() => setWIPTrigger(null)}
                     />
-                    : null
                 }
             </SheetContent>
             <Card className={cn(className, "flex flex-col gap-2 p-2")}>
