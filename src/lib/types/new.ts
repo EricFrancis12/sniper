@@ -1,4 +1,4 @@
-import { Trigger, Handler, Campaign, TriggerType, KeyName, ModifierKeyName } from ".";
+import { Trigger, Handler, Campaign, TriggerType, KeyName, ModifierKeyName, SniperData } from ".";
 
 export function newTrigger(
     triggerType: TriggerType,
@@ -57,5 +57,11 @@ export function newCampaign({
         triggers,
         handlers,
         disabled,
+    };
+}
+
+export function newSniperData(): SniperData {
+    return {
+        campaigns: [],
     };
 }

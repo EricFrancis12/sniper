@@ -4,14 +4,14 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CampaignEditor from "@/components/CampaignEditor";
 import PageMain from "../PageMain";
+import { useDataContext } from "@/contexts/dataContext";
 import { useToast } from "@/hooks/use-toast";
-import { useCampaigns } from "@/hooks/use-campaigns";
 import { newCampaign } from "@/lib/types";
 
 export default function CreateCampaignPage() {
     const navigate = useNavigate();
     const { toast } = useToast();
-    const [campaigns, setCampaigns] = useCampaigns();
+    const { campaigns, setCampaigns } = useDataContext();
 
     const [campaign, setCampaign] = useState(newCampaign());
 

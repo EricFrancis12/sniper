@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Copy, Pencil, TrashIcon } from "lucide-react";
-import { useCampaigns } from "@/hooks/use-campaigns";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageMain from "../PageMain";
+import { useDataContext } from "@/contexts/dataContext";
 import { useToast } from "@/hooks/use-toast"
 import { cn, acceptFileUpload, downloadAsJsonFile, safeSchemaParseJSON, utf8StringFromFile } from "@/lib/utils";
 import { sniperDataSchema } from "@/lib/schemas";
@@ -12,7 +12,7 @@ import { SniperData, cloneCampaign, cloneCampaignWithName } from "@/lib/types";
 
 export default function CampaignsPage() {
     const { toast } = useToast();
-    const [campaigns, setCampaigns] = useCampaigns();
+    const { campaigns, setCampaigns } = useDataContext();
 
     function handleDeleteCampaign(campaignId: string) {
         setCampaigns(campaigns.filter((c) => c.id !== campaignId));

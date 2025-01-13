@@ -9,22 +9,25 @@ import SettingsPage from "./pages/SettingsPage";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/AppSidebar";
 import { Toaster } from "@/components/ui/toaster";
+import { DataProvider } from "@/contexts/dataContext";
 
 function Options() {
     return (
-        <SidebarProvider>
-            <Toaster />
-            <AppSidebar />
-            <HashRouter>
-                <Routes>
-                    <Route path="/" element={<CampaignsPage />} index />
-                    <Route path="/campaigns" element={<CampaignsPage />} />
-                    <Route path="/campaigns/create" element={<CreateCampaignPage />} />
-                    <Route path="/campaigns/:campaignId/edit" element={<EditCampaignPage />} />
-                    <Route path="/settings" element={<SettingsPage />} />
-                </Routes>
-            </HashRouter>
-        </SidebarProvider>
+        <DataProvider>
+            <SidebarProvider>
+                <Toaster />
+                <AppSidebar />
+                <HashRouter>
+                    <Routes>
+                        <Route path="/" element={<CampaignsPage />} index />
+                        <Route path="/campaigns" element={<CampaignsPage />} />
+                        <Route path="/campaigns/create" element={<CreateCampaignPage />} />
+                        <Route path="/campaigns/:campaignId/edit" element={<EditCampaignPage />} />
+                        <Route path="/settings" element={<SettingsPage />} />
+                    </Routes>
+                </HashRouter>
+            </SidebarProvider>
+        </DataProvider>
     );
 }
 

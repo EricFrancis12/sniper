@@ -3,14 +3,14 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import CampaignEditor from "@/components/CampaignEditor";
 import { Button } from "@/components/ui/button";
+import { useDataContext } from "@/contexts/dataContext";
 import { useToast } from "@/hooks/use-toast";
-import { useCampaigns } from "@/hooks/use-campaigns";
 import PageMain from "../PageMain";
 import { Campaign } from "@/lib/types";
 
 export default function EditCampaignPage() {
     const { campaignId } = useParams();
-    const [campaigns, setCampaigns] = useCampaigns();
+    const { campaigns, setCampaigns } = useDataContext();
     const { toast } = useToast();
 
     const campaign = campaigns.find(({ id }) => id === campaignId) ?? null;
