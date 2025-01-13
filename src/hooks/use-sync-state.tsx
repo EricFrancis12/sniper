@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-// TODO: impliment idle, pending, success, and failure states for useSyncState(),
-
 export function useSyncState<T>(initialState: T, key: string): [T, React.Dispatch<React.SetStateAction<T>>] {
     const [state, setState] = useState<T>(initialState);
 
@@ -14,7 +12,9 @@ export function useSyncState<T>(initialState: T, key: string): [T, React.Dispatc
 
     function setNewState(value: React.SetStateAction<T>) {
         setState(value);
-        chrome.storage.sync.set({ [key]: value });
+        chrome.storage.sync
+            .set({ [key]: value })
+            .catch(console.error);
     }
 
     return [state, setNewState];

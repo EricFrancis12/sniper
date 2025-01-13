@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
-import { Campaign, newSniperData, SniperData } from "@/lib/types";
 import { useSyncState } from "@/hooks/use-sync-state";
+import { Campaign } from "@/lib/types";
 
 export type DataContext = {
-    sniperData: SniperData;
-    setSniperData: React.Dispatch<React.SetStateAction<SniperData>>;
     campaigns: Campaign[];
     setCampaigns: (c: Campaign[]) => void;
 };
@@ -22,16 +20,10 @@ export function useDataContext() {
 export function DataProvider({ children }: {
     children: React.ReactNode;
 }) {
-    const [sniperData, setSniperData] = useSyncState<SniperData>(newSniperData(), "sniper-data");
-
-    function setCampaigns(newCampaigns: Campaign[]) {
-        setSniperData({ ...sniperData, campaigns: newCampaigns });
-    }
+    const [campaigns, setCampaigns] = useSyncState<Campaign[]>([], "campaigns");
 
     const value: DataContext = {
-        sniperData,
-        setSniperData,
-        campaigns: sniperData.campaigns,
+        campaigns,
         setCampaigns,
     };
 
