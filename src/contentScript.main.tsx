@@ -3,7 +3,11 @@ import { isKeyTriggerType, safeTestRegexStr, satisfiesAllModifiers } from "./lib
 import { sniperDataSchema } from "./lib/schemas";
 import { Campaign, toKeyboardEvent, triggerTypeToEventName } from "./lib/types";
 
+console.log("~ main 1");
+
 window.addEventListener("message", async (e) => {
+    console.log("~ main 2");
+
     const { data, success } = await sniperDataSchema.spa(e.data);
     if (!success) return;
 
@@ -31,6 +35,12 @@ window.addEventListener("message", async (e) => {
 
                     const doHandles = (e?: Event | KeyboardEvent | MouseEvent) => {
                         // TODO: add app disabled state, and check if disabled here
+
+                        // Send message to see if the app is disabled
+
+                        // If disabled, return 
+
+                        // If request fails, notify user of failure, and return
 
                         // Handle if keyboard event
                         const keyboardEvent = toKeyboardEvent(e);

@@ -4,7 +4,7 @@ import { Campaign } from "@/lib/types";
 
 export type DataContext = {
     campaigns: Campaign[];
-    setCampaigns: (c: Campaign[]) => void;
+    setCampaigns: React.Dispatch<React.SetStateAction<Campaign[]>>;
 };
 
 const DataContext = React.createContext<DataContext | null>(null);
@@ -30,6 +30,6 @@ export function DataProvider({ children }: {
     return (
         <DataContext.Provider value={value}>
             {children}
-        </DataContext.Provider >
-    )
+        </DataContext.Provider>
+    );
 }
