@@ -1,6 +1,12 @@
 import { AppMessage } from "@/lib/types";
 
+// @omit
+console.log("contentScript.isolated 1");
+
 window.addEventListener("load", () => {
+    // @omit
+    console.log("contentScript.isolated 2");
+
     chrome.storage.sync.get(
         null,
         (items) => {

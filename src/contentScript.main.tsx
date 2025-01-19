@@ -8,7 +8,13 @@ let campaignsProccessed = false;
 
 let appDisabled = false;
 
+// @omit
+console.log("contentScript.main 1");
+
 window.addEventListener("message", async (e) => {
+    // @omit
+    console.log("contentScript.main 2");
+
     const { data, success } = await appMessageSchema.spa(e.data);
     if (!success) return;
 
