@@ -104,3 +104,11 @@ export type SniperData = {
 
 // Example: "click", "keydown", etc...
 export type EventName = keyof WindowEventMap;
+
+export type AppMessage = {
+    appMessageType: "PROCESS_CAMPAIGNS";
+    campaigns: Campaign[];
+} | {
+    appMessageType: "TOGGLE_APP_DISABLED";
+    value: boolean;
+};

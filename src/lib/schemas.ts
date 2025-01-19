@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
     Trigger, Handler, Campaign, TriggerType,
-    KeyName, ModifierKeyName, SniperData
+    KeyName, ModifierKeyName, SniperData, AppMessage,
 } from "./types";
 
 export const triggerSchema: z.ZodType<Trigger> = z.object({
@@ -32,3 +32,14 @@ export const campaignSchema: z.ZodType<Campaign> = z.object({
 export const sniperDataSchema: z.ZodType<SniperData> = z.object({
     campaigns: z.array(campaignSchema),
 });
+
+export const appMessageSchema: z.ZodType<AppMessage> = z.union([
+    z.object({
+        appMessageType: z.literal("PROCESS_CAMPAIGNS"),
+        campaigns: z.array(campaignSchema),
+    }),
+    z.object({
+        appMessageType: z.literal("TOGGLE_APP_DISABLED"),
+        value: z.boolean(),
+    }),
+]);

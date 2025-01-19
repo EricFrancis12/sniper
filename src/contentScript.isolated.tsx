@@ -1,21 +1,24 @@
-console.log("~ isolated 1");
+import { AppMessage } from "@/lib/types";
 
 window.addEventListener("load", () => {
-    console.log("~ isolated 2");
-
     chrome.storage.sync.get(
-        {
-            campaigns: [],
-            disabled: false,
-        },
+        null,
         (items) => {
-            console.log(items);
-            if ("campaigns" in items) {
-                window.postMessage({ campaigns: items.campaigns }, "*");
+            if ("appDisabled" in items && typeof items.appDisabled === "boolean") {
+                const appMessage: AppMessage = {
+                    appMessageType: "TOGGLE_APP_DISABLED",
+                    value: items.appDisabled,
+                };
+                chrome.runtime.sendMessage(appMessage);
+                window.postMessage(appMessage, "*");
             }
-            if ("disabled" in items && (items.disabled === "true" || items.disabled === "false")) {
-                console.log("here");
-                chrome.runtime.sendMessage(items.disabled);
+
+            if ("campaigns" in items && Array.isArray(items.campaigns)) {
+                const appMessage: AppMessage = {
+                    appMessageType: "PROCESS_CAMPAIGNS",
+                    campaigns: items.campaigns, // TODO: refactor to remove any type
+                };
+                window.postMessage(appMessage, "*");
             }
         },
     );

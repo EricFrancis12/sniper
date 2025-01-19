@@ -1,15 +1,29 @@
 import { doHandle } from "./lib/handlers";
 import { isKeyTriggerType, safeTestRegexStr, satisfiesAllModifiers } from "./lib/utils";
-import { sniperDataSchema } from "./lib/schemas";
+import { appMessageSchema } from "./lib/schemas";
 import { Campaign, toKeyboardEvent, triggerTypeToEventName } from "./lib/types";
 
-console.log("~ main 1");
+let processingCampaigns = false;
+let campaignsProccessed = false;
+
+let appDisabled = false;
 
 window.addEventListener("message", async (e) => {
-    console.log("~ main 2");
-
-    const { data, success } = await sniperDataSchema.spa(e.data);
+    const { data, success } = await appMessageSchema.spa(e.data);
     if (!success) return;
+
+    if (data.appMessageType === "TOGGLE_APP_DISABLED") {
+        appDisabled = data.value;
+        return;
+    }
+
+    if (data.appMessageType !== "PROCESS_CAMPAIGNS"
+        || campaignsProccessed
+        || processingCampaigns
+    ) {
+        return;
+    }
+    processingCampaigns = true;
 
     data.campaigns
         .filter(({ urlRegex, handlers, disabled }) => {
@@ -34,13 +48,7 @@ window.addEventListener("message", async (e) => {
                     }
 
                     const doHandles = (e?: Event | KeyboardEvent | MouseEvent) => {
-                        // TODO: add app disabled state, and check if disabled here
-
-                        // Send message to see if the app is disabled
-
-                        // If disabled, return 
-
-                        // If request fails, notify user of failure, and return
+                        if (appDisabled) return;
 
                         // Handle if keyboard event
                         const keyboardEvent = toKeyboardEvent(e);
@@ -76,4 +84,6 @@ window.addEventListener("message", async (e) => {
                     });
                 });
         });
+
+    campaignsProccessed = true;
 });
